@@ -1,0 +1,32 @@
+name: PR preview
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+    paths: ["docs/**", "website/**"]
+concurrency: preview-${{ github.ref }}
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # gh-pages への書き込み
+      pull-requests: write   # PR へのコメント
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        if: github.event.action != 'closed'
+        with:
+          python-version: 3.x
+      - name: プレビュー用に site_url を差し替え
+        if: github.event.action != 'closed'
+        run: |
+          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}/"
+          sed -i "s|^site_url = .*|site_url = \"${URL}\"|" website/zensical.toml
+      - name: 合体してビルド
+        if: github.event.action != 'closed'
+        run: |
+          pip install zensical
+          bash website/build.sh
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./website/site/
+          wait-for-pages-deployment: true   # 開けるようになってからコメント
