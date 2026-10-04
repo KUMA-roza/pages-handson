@@ -4,6 +4,7 @@ site_url = "https://KUMA-roza.github.io/pages-handson/"
 docs_dir = "_build"        # build.sh が docs/ と content/ を合体させる一時フォルダ
 site_dir = "site"
 edit_uri = "edit/main/docs/"
+repo_url = "https://github.com/KUMA-roza/pages-handson"
 
 nav = [
   { "ホーム" = "index.md" },              # website/content/index.md
