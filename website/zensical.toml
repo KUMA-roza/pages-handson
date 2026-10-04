@@ -3,6 +3,7 @@ site_name = "プロダクト設計資料"
 site_url = "https://KUMA-roza.github.io/pages-handson/"
 docs_dir = "_build"        # build.sh が docs/ と content/ を合体させる一時フォルダ
 site_dir = "site"
+edit_uri = "edit/main/docs/"
 
 nav = [
   { "ホーム" = "index.md" },              # website/content/index.md
@@ -27,6 +28,8 @@ features = [
   "navigation.instant",     # SPA 的な高速遷移（site_url 必須）
   "toc.follow",
   "navigation.top",
+  "content.action.edit",   # このページを編集
+  "content.action.view",   # ソースを表示
 ]
 
 [project.markdown_extensions]
